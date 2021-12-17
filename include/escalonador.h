@@ -10,12 +10,12 @@
 #include <string>
 #include <fstream>
 #include "listadeurls.h"
-#include "listadehosts.h"
+#include "filadehosts.h"
 using namespace std;
 
 class Escalonador {
     private:
-        ListaDeHosts coletor;
+        FilaDeHosts coletor;
     public:
         Escalonador();
         void addUrl(string url);

@@ -1,51 +1,47 @@
 //---------------------------------------------------------------------
-// Arquivo	: listadehosts.h
-// Conteudo	: definicoes do listadehosts 
+// Arquivo	: filadehosts.h
+// Conteudo	: definicoes da fila de hosts 
 // Autor	: Gabriel Teixeira Carvalho (gabrielteixeirac@dcc.ufmg.br)
 // Historico	: 2021-11-30 - arquivo criado
 //---------------------------------------------------------------------
-#ifndef LISTASDEHOSTSH
-#define LISTASDEHOSTSH
+#ifndef FILADEHOSTSH
+#define FILADEHOSTSH
 
 #include <string>
 #include "listadeurls.h"
 
 using namespace std;
 
-struct CelulaListaDeHosts
+struct CelulaFilaDeHosts
 {
     string host;
     ListaDeURLS item;
-    CelulaListaDeHosts* prox;
+    CelulaFilaDeHosts* prox;
 
-    CelulaListaDeHosts(){
+    CelulaFilaDeHosts(){
         this->item = ListaDeURLS();
         this->prox = NULL;
     }
     
 };
 
-class ListaDeHosts {
+class FilaDeHosts {
     public:
-        ListaDeHosts();
+        FilaDeHosts();
         bool vazia();
         int getTamanho();
         string getHost(int pos);
         ListaDeURLS* getItem(int pos);
-        void setItem(ListaDeURLS item, int pos);
-        void insereInicio(ListaDeURLS item);
-        void insereFinal(ListaDeURLS item, string host);
-        void inserePosicao(ListaDeURLS item, int pos);
         ListaDeURLS removeInicio();
-        ListaDeURLS removePosicao(int pos);
+        void insereFinal(ListaDeURLS item, string host);
         void imprime();
         void limpa();
     
     protected:
         int tamanho;
-        CelulaListaDeHosts* primeiro;
-        CelulaListaDeHosts* ultimo;
-        CelulaListaDeHosts* posiciona(int pos, bool antes);
+        CelulaFilaDeHosts* primeiro;
+        CelulaFilaDeHosts* ultimo;
+        CelulaFilaDeHosts* posiciona(int pos, bool antes);
 };
 
 #endif

@@ -13,7 +13,7 @@ using namespace std;
 
 // construtor de um escalonador
 Escalonador::Escalonador(){
-    coletor = ListaDeHosts();   
+    coletor = FilaDeHosts();   
 }
 
 // Descricao: insere a URL na posição correta da lista de URLs do host em 
@@ -295,7 +295,7 @@ void Escalonador::limpaHost(string host){
     // percorre o escalonador até achar o host passado como parametro e limpa-o
     for (int i = 1; i <= coletor.getTamanho(); i++){
         if (coletor.getHost(i) == host){
-            coletor.removePosicao(i);
+            coletor.getItem(i)->limpa();
             hostPresente = true;
         }
     }

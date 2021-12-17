@@ -1,6 +1,6 @@
 //---------------------------------------------------------------------
-// Arquivo	: escalonador.cpp
-// Conteudo	: implementacao do escalonador 
+// Arquivo	: main.cpp
+// Conteudo	: implementacao do programa principal
 // Autor	: Gabriel Teixeira Carvalho (gabrielteixeirac@dcc.ufmg.br)
 // Historico	: 2021-11-23 - arquivo criado
 //---------------------------------------------------------------------
@@ -9,7 +9,7 @@
 #include <fstream>
 #include <regex>
 #include "listadeurls.h"
-#include "listadehosts.h"
+#include "filadehosts.h"
 #include "escalonador.h"
 
 using namespace std;
