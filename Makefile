@@ -18,7 +18,7 @@ INC = include
 OBJS = $(OBJ)/main.o $(OBJ)/escalonador.o $(OBJ)/listadehosts.o $(OBJ)/listaencadeada.o
 HDRS = $(INC)/escalonador.h $(INC)/listadehosts.h $(INC)/listaencadeada.h
 
-CXXFLAGS = -c -std=c++11 -Wall -I$(INC)
+CXXFLAGS = -c -g -std=c++11 -Wall -I$(INC)
 
 EXE = $(BIN)/main
 

@@ -18,7 +18,7 @@ class Escalonador {
         ListaDeHosts coletor;
     public:
         Escalonador();
-        void addUrls(int quantidade, string url);
+        void addUrl(string url);
         void escalonaTudo(ofstream& arquivoDeSaida);
         void escalona(int quantidade, ofstream& arquivoDeSaida);
         void escalonaHost(string host, int quantidade, ofstream& arquivoDeSaida);

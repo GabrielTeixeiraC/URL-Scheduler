@@ -61,7 +61,7 @@ int main(int argc, char *argv[]){
                 
                 for (unsigned long i = 0; i < parametroInteiro; i++){
                     getline(arquivoDeComandos, url);
-                    escalonador.addUrls(parametroInteiro, url);
+                    escalonador.addUrl(url);
                 }
                 
             }
