@@ -1,11 +1,11 @@
 //---------------------------------------------------------------------
-// Arquivo	: listaencadeada.h
-// Conteudo	: definicoes do listaencadeada 
+// Arquivo	: listadeurls.h
+// Conteudo	: definicoes do listadeurls 
 // Autor	: Gabriel Teixeira Carvalho (gabrielteixeirac@dcc.ufmg.br)
 // Historico	: 2021-11-30 - arquivo criado
 //---------------------------------------------------------------------
-#ifndef LISTAENCADEADAH
-#define LISTAENCADEADAH
+#ifndef LISTADEURLSH
+#define LISTADEURLSH
 
 #include <string>
 #include <fstream>
@@ -24,10 +24,9 @@ struct CelulaLista
 };
 
 
-class ListaEncadeada {
+class ListaDeURLS {
     public:
-        ListaEncadeada();
-        // ~ListaEncadeada();
+        ListaDeURLS();
         bool vazia();
         int getTamanho();
         string getItem(int pos);

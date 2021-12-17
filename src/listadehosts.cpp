@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include "listadehosts.h"
-#include "listaencadeada.h"
+#include "listadeurls.h"
 
 using namespace std;
 
@@ -26,7 +26,7 @@ int ListaDeHosts::getTamanho() {
     return tamanho;
 }
 
-ListaEncadeada* ListaDeHosts::getItem(int pos){
+ListaDeURLS* ListaDeHosts::getItem(int pos){
     CelulaListaDeHosts *p;
     p = posiciona(pos, false);
     return &(p->item);
@@ -57,13 +57,13 @@ CelulaListaDeHosts* ListaDeHosts::posiciona(int pos, bool antes = false){
     return p;
 }
 
-void ListaDeHosts::setItem(ListaEncadeada item, int pos){
+void ListaDeHosts::setItem(ListaDeURLS item, int pos){
     CelulaListaDeHosts *p;
     p = posiciona(pos);
     p->item = item;
 }
 
-void ListaDeHosts::insereInicio(ListaEncadeada item){
+void ListaDeHosts::insereInicio(ListaDeURLS item){
     CelulaListaDeHosts *nova;
     nova = new CelulaListaDeHosts();
     nova->item = item;
@@ -75,7 +75,7 @@ void ListaDeHosts::insereInicio(ListaEncadeada item){
     }
 }
 
-void ListaDeHosts::insereFinal(ListaEncadeada item, string host){
+void ListaDeHosts::insereFinal(ListaDeURLS item, string host){
     CelulaListaDeHosts *nova;
     nova = new CelulaListaDeHosts();
     nova->item = item;
@@ -86,7 +86,7 @@ void ListaDeHosts::insereFinal(ListaEncadeada item, string host){
     tamanho++;
 }
 
-void ListaDeHosts::inserePosicao(ListaEncadeada item, int pos){
+void ListaDeHosts::inserePosicao(ListaDeURLS item, int pos){
     CelulaListaDeHosts *p, *nova;
     p = posiciona(pos,true); // posiciona na célula anterior
     nova = new CelulaListaDeHosts();
@@ -99,8 +99,8 @@ void ListaDeHosts::inserePosicao(ListaEncadeada item, int pos){
     }
 }
 
-ListaEncadeada ListaDeHosts::removeInicio(){
-    ListaEncadeada aux;
+ListaDeURLS ListaDeHosts::removeInicio(){
+    ListaDeURLS aux;
     CelulaListaDeHosts *p;
     if (tamanho == 0){
         throw "ERRO: Lista vazia!";
@@ -116,8 +116,8 @@ ListaEncadeada ListaDeHosts::removeInicio(){
     return aux;
 }
 
-ListaEncadeada ListaDeHosts::removePosicao(int pos){
-    ListaEncadeada aux;
+ListaDeURLS ListaDeHosts::removePosicao(int pos){
+    ListaDeURLS aux;
     CelulaListaDeHosts *p, *q;
     if (tamanho == 0){
         throw "ERRO: Lista vazia!";

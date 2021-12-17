@@ -6,11 +6,12 @@
 //---------------------------------------------------------------------
 
 #include <iostream>
-#include "listaencadeada.h"
+#include "listadeurls.h"
 
 using namespace std;
 
-ListaEncadeada::ListaEncadeada() {
+// construtor da Lista 
+ListaDeURLS::ListaDeURLS() {
     primeiro = new CelulaLista();
     ultimo = primeiro;
     ultimo->prox = NULL;
@@ -18,21 +19,21 @@ ListaEncadeada::ListaEncadeada() {
     tamanho = 0;
 }
 
-bool ListaEncadeada::vazia() {
+bool ListaDeURLS::vazia() {
     return tamanho == 0;
 }
 
-int ListaEncadeada::getTamanho() {
+int ListaDeURLS::getTamanho() {
     return tamanho;
 }
 
-string ListaEncadeada::getItem(int pos){
+string ListaDeURLS::getItem(int pos){
     CelulaLista *p;
     p = posiciona(pos, false);
     return p->item;
 }
 
-CelulaLista* ListaEncadeada::posiciona(int pos, bool antes = false){
+CelulaLista* ListaDeURLS::posiciona(int pos, bool antes = false){
     CelulaLista *p; 
     int i;
     if ( (pos > tamanho) || (pos <= 0) ){
@@ -51,13 +52,13 @@ CelulaLista* ListaEncadeada::posiciona(int pos, bool antes = false){
     return p;
 }
 
-void ListaEncadeada::setItem(string item, int pos){
+void ListaDeURLS::setItem(string item, int pos){
     CelulaLista *p;
     p = posiciona(pos);
     p->item = item;
 }
 
-void ListaEncadeada::insereInicio(string item){
+void ListaDeURLS::insereInicio(string item){
     CelulaLista *nova;
     nova = new CelulaLista();
     nova->item = item;
@@ -69,7 +70,7 @@ void ListaEncadeada::insereInicio(string item){
     }
 }
 
-void ListaEncadeada::insereFinal(string item){
+void ListaDeURLS::insereFinal(string item){
     CelulaLista *nova;
     nova = new CelulaLista();
     nova->item = item;
@@ -78,7 +79,7 @@ void ListaEncadeada::insereFinal(string item){
     tamanho++;
 }
 
-void ListaEncadeada::inserePosicao(string item, int pos){
+void ListaDeURLS::inserePosicao(string item, int pos){
     CelulaLista *p, *nova;
     p = posiciona(pos,true); // posiciona na célula anterior
     nova = new CelulaLista();
@@ -91,7 +92,7 @@ void ListaEncadeada::inserePosicao(string item, int pos){
     }
 }
 
-string ListaEncadeada::removeInicio(){
+string ListaDeURLS::removeInicio(){
     string aux;
     CelulaLista *p;
     if (tamanho == 0){
@@ -108,7 +109,7 @@ string ListaEncadeada::removeInicio(){
     return aux;
 }
 
-string ListaEncadeada::removeFinal(){
+string ListaDeURLS::removeFinal(){
     string aux;
     CelulaLista *p;
     if (tamanho == 0){
@@ -124,7 +125,7 @@ string ListaEncadeada::removeFinal(){
     return aux;
 }
 
-string ListaEncadeada::removePosicao(int pos){
+string ListaDeURLS::removePosicao(int pos){
     string aux;
     CelulaLista *p, *q;
     if (tamanho == 0){
@@ -142,7 +143,8 @@ string ListaEncadeada::removePosicao(int pos){
     }
     return aux;
 }
-void ListaEncadeada::imprime(ofstream& arquivoDeSaida){
+
+void ListaDeURLS::imprime(ofstream& arquivoDeSaida){
     CelulaLista *p;
     p = primeiro->prox;
     
@@ -151,7 +153,8 @@ void ListaEncadeada::imprime(ofstream& arquivoDeSaida){
         p = p->prox;
     }
 }
-void ListaEncadeada::limpa(){
+
+void ListaDeURLS::limpa(){
     CelulaLista *p;
     p = primeiro->prox;
     while (p!=NULL) {
@@ -163,8 +166,3 @@ void ListaEncadeada::limpa(){
     ultimo = primeiro;
     tamanho = 0;
 }
-
-// ListaEncadeada::~ListaEncadeada(){
-//     limpa();
-//     delete primeiro;
-// }

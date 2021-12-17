@@ -20,7 +20,7 @@ Escalonador::Escalonador(){
 //            ordem crescente de profundidade (quantidade de barras na URL)
 // Entrada: listaDeURLS, urlValida
 // Saida: lista com url adicionada na posição correta
-void insereNaPosicaoCorreta(ListaEncadeada* listaDeURLS, string urlValida){
+void insereNaPosicaoCorreta(ListaDeURLS* listaDeURLS, string urlValida){
     string urlPresente;
 
     // profundidade da URL a ser adicionada  
@@ -142,7 +142,7 @@ void Escalonador::addUrl(string url){
         }
         
         bool hostPresente = false;
-        ListaEncadeada* listaDeURLS = new ListaEncadeada();
+        ListaDeURLS* listaDeURLS = new ListaDeURLS();
         
         // procura o host e insere a URL na posição correta da lista
         for (int i = 1; i <= coletor.getTamanho(); i++){
@@ -174,7 +174,7 @@ void Escalonador::addUrl(string url){
 void Escalonador::escalonaTudo(ofstream& arquivoDeSaida){
     // percorre o escalonador imprimindo todas as URLs em cada host
     for (int i = 1; i <= coletor.getTamanho(); i++)    {
-        ListaEncadeada *aux = coletor.getItem(i);
+        ListaDeURLS *aux = coletor.getItem(i);
         int tamanhoLista = aux->getTamanho();
         for (int j = 0; j < tamanhoLista; j++){
             arquivoDeSaida << aux->removeInicio() << endl;
@@ -192,7 +192,7 @@ void Escalonador::escalona(int quantidade, ofstream& arquivoDeSaida){
     }
 
     int quantidadeAtual;
-    ListaEncadeada* aux;
+    ListaDeURLS* aux;
     
     // percorre a fila de hosts <---------------------------------------------------------------------- escalonando as URLs,
     // se um host for completamente escalonado, passa para o próximo na fila e continua escalonando   
@@ -222,7 +222,7 @@ void Escalonador::escalona(int quantidade, ofstream& arquivoDeSaida){
 // Saida: URLs impressas no arquivo de saída
 void Escalonador::escalonaHost(string host, int quantidade, ofstream& arquivoDeSaida){
     int quantidadeFinal;
-    ListaEncadeada *aux;
+    ListaDeURLS *aux;
     bool hostPresente = false;
 
     // percorre o escalonador até achar o host passado como parametro
@@ -262,7 +262,7 @@ void Escalonador::verHost(string host, ofstream& arquivoDeSaida){
     // percorre o escalonador até achar o host passado como parametro e imprime suas informações 
     for (int i = 1; i <= coletor.getTamanho(); i++){
         if (coletor.getHost(i) == host){
-            ListaEncadeada *aux = coletor.getItem(i);
+            ListaDeURLS *aux = coletor.getItem(i);
             aux->imprime(arquivoDeSaida);
             hostPresente = true;
             break;

@@ -15,8 +15,8 @@ SRC = src
 OBJ = obj
 INC = include
 
-OBJS = $(OBJ)/main.o $(OBJ)/escalonador.o $(OBJ)/listadehosts.o $(OBJ)/listaencadeada.o
-HDRS = $(INC)/escalonador.h $(INC)/listadehosts.h $(INC)/listaencadeada.h
+OBJS = $(OBJ)/main.o $(OBJ)/escalonador.o $(OBJ)/listadehosts.o $(OBJ)/listadeurls.o
+HDRS = $(INC)/escalonador.h $(INC)/listadehosts.h $(INC)/listadeurls.h
 
 CXXFLAGS = -c -g -std=c++11 -Wall -I$(INC)
 
@@ -36,8 +36,8 @@ $(OBJ)/escalonador.o: $(HDRS) $(SRC)/escalonador.cpp
 $(OBJ)/listadehosts.o: $(HDRS) $(SRC)/listadehosts.cpp
 	$(CXX) $(CXXFLAGS) -o $(OBJ)/listadehosts.o $(SRC)/listadehosts.cpp
 
-$(OBJ)/listaencadeada.o: $(HDRS) $(SRC)/listaencadeada.cpp
-	$(CXX) $(CXXFLAGS) -o $(OBJ)/listaencadeada.o $(SRC)/listaencadeada.cpp
+$(OBJ)/listadeurls.o: $(HDRS) $(SRC)/listadeurls.cpp
+	$(CXX) $(CXXFLAGS) -o $(OBJ)/listadeurls.o $(SRC)/listadeurls.cpp
 			
 clean:
 	rm $(EXE) $(OBJS)

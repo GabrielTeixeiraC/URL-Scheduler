@@ -8,18 +8,18 @@
 #define LISTASDEHOSTSH
 
 #include <string>
-#include "listaencadeada.h"
+#include "listadeurls.h"
 
 using namespace std;
 
 struct CelulaListaDeHosts
 {
     string host;
-    ListaEncadeada item;
+    ListaDeURLS item;
     CelulaListaDeHosts* prox;
 
     CelulaListaDeHosts(){
-        this->item = ListaEncadeada();
+        this->item = ListaDeURLS();
         this->prox = NULL;
     }
     
@@ -28,17 +28,16 @@ struct CelulaListaDeHosts
 class ListaDeHosts {
     public:
         ListaDeHosts();
-        // ~ListaDeHosts();
         bool vazia();
         int getTamanho();
         string getHost(int pos);
-        ListaEncadeada* getItem(int pos);
-        void setItem(ListaEncadeada item, int pos);
-        void insereInicio(ListaEncadeada item);
-        void insereFinal(ListaEncadeada item, string host);
-        void inserePosicao(ListaEncadeada item, int pos);
-        ListaEncadeada removeInicio();
-        ListaEncadeada removePosicao(int pos);
+        ListaDeURLS* getItem(int pos);
+        void setItem(ListaDeURLS item, int pos);
+        void insereInicio(ListaDeURLS item);
+        void insereFinal(ListaDeURLS item, string host);
+        void inserePosicao(ListaDeURLS item, int pos);
+        ListaDeURLS removeInicio();
+        ListaDeURLS removePosicao(int pos);
         void imprime();
         void limpa();
     
