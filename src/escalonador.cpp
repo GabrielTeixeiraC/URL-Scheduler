@@ -16,23 +16,33 @@ Escalonador::Escalonador(){
     coletor = ListaDeHosts();   
 }
 
-
+// Descricao: insere a URL na posição correta da lista de URLs do host em 
+//            ordem crescente de profundidade (quantidade de barras na URL)
+// Entrada: listaDeURLS, urlValida
+// Saida: lista com url adicionada na posição correta
 void insereNaPosicaoCorreta(ListaEncadeada* listaDeURLS, string urlValida){
     string urlPresente;
 
+    // profundidade da URL a ser adicionada  
     int profundidadeURLNova;
+
+    // profundidade das URLs já presentes na lista
     int profundidadeURLAnterior;
     int profundidadeURLProxima;
 
+    // se a lista estiver vazia, apenas insere no início
     if (listaDeURLS->getTamanho() == 0){
         listaDeURLS->insereInicio(urlValida);
         return;
     }
+    // se a lista tiver somente 1 elemento, compara a profundidade entre o elemento novo e o já presente
     else if (listaDeURLS->getTamanho() == 1){
         profundidadeURLNova = count(urlValida.begin(), urlValida.end(), '/');
+
         urlPresente = listaDeURLS->getItem(1);
         profundidadeURLAnterior = count(urlPresente.begin(), urlPresente.end(), '/');
         
+        // impede inserção de URLs repetidas
         if (urlValida == urlPresente){
             return;
         }
@@ -45,12 +55,13 @@ void insereNaPosicaoCorreta(ListaEncadeada* listaDeURLS, string urlValida){
         }
         return;
     }
+    // lista com mais de 1 elemento
     else{
-        //insere depois de igual
-        for (int j = 0; j < listaDeURLS->getTamanho() - 1; j++){
+        // trata do caso em que a profundidade nova é igual a alguma profundidade já presente
+        for (int j = 1; j <= listaDeURLS->getTamanho() - 1; j++){
             profundidadeURLNova = count(urlValida.begin(), urlValida.end(), '/');
             
-            urlPresente = listaDeURLS->getItem(j + 1);
+            urlPresente = listaDeURLS->getItem(j);
             profundidadeURLAnterior = count(urlPresente.begin(), urlPresente.end(), '/');
 
             if (urlValida == urlPresente){
@@ -58,31 +69,37 @@ void insereNaPosicaoCorreta(ListaEncadeada* listaDeURLS, string urlValida){
             }
             
             if (profundidadeURLNova == profundidadeURLAnterior){
-                listaDeURLS->inserePosicao(urlValida, j + 2);
+                listaDeURLS->inserePosicao(urlValida, j + 1);
                 return;
             }
         }
         
-        for (int j = 0; j < listaDeURLS->getTamanho() - 1; j++){
+        // encaixa a nova URL entre uma URL anterior e uma próxima URL
+        for (int j = 1; j <= listaDeURLS->getTamanho() - 1; j++){
             profundidadeURLNova = count(urlValida.begin(), urlValida.end(), '/');
             profundidadeURLAnterior = 0;
             profundidadeURLProxima = 0;
 
-            urlPresente = listaDeURLS->getItem(j + 1);
+            // pega a profundidade da URL anterior
+            urlPresente = listaDeURLS->getItem(j);
             profundidadeURLAnterior = count(urlPresente.begin(), urlPresente.end(), '/');
 
+            // checa se a URL já está presente, só compara com a URL anterior pois a próxima URL
+            // vai se tornar a URL anterior na próxima iteração do loop
             if (urlValida == urlPresente){
                 return;
             }
 
-            urlPresente = listaDeURLS->getItem(j + 2);
+            // pega a profundidade da próxima URL
+            urlPresente = listaDeURLS->getItem(j + 1);
             profundidadeURLProxima = count(urlPresente.begin(), urlPresente.end(), '/');
             
+            // encaixa a URL nova na posição correta, seja no início, no meio ou no final da lista
             if (profundidadeURLNova < profundidadeURLAnterior){
                 listaDeURLS->insereInicio(urlValida);
             }
             else if (profundidadeURLNova > profundidadeURLAnterior and profundidadeURLNova < profundidadeURLProxima){
-                listaDeURLS->inserePosicao(urlValida, j + 2);
+                listaDeURLS->inserePosicao(urlValida, j + 1);
             }
             else{
                 listaDeURLS->insereFinal(urlValida);
@@ -93,31 +110,41 @@ void insereNaPosicaoCorreta(ListaEncadeada* listaDeURLS, string urlValida){
 }
 
 // Descricao: adiciona ao escalonador a url passada como parametro
-// Entrada: arquivoDeSaida
-// Saida: URLs impressas no arquivo de saída
+// Entrada: url
+// Saida: escalonador com url adicionada na posição correta
 void Escalonador::addUrl(string url){
     smatch matches;
-    regex regexURL("(http:\\/\\/)(www.)?([A-Za-z0-9]*[.A-Za-z0-9]*)([-._=?\\/A-Za-z0-9]*)([\\/#A-Za-z0-9]*)([\\r]*)");
-    if(regex_match(url, matches, regexURL)){
-        bool hostPresente = false;
 
-        ListaEncadeada* listaDeURLS = new ListaEncadeada();
+    // padrão de regex seguindo as regras da especificação para identificar URLs válidas
+    regex regexURL("(http:\\/\\/)(www.)?([A-Za-z0-9]*[.A-Za-z0-9]*)([-._=?\\/A-Za-z0-9]*)([\\/#A-Za-z0-9]*)([\\r]*)");
+    if(regex_match(url, matches, regexURL)){    //URL válida
+        
+        // matches: [0] = URL inteira, [1] = http://, [2] = www., [3] = xxxx.com (host)
+        //          [4] = /xxxx/xxxx?q=xxxx (path e query), [5] = #xxxxxx (fragmento), [6] = \r   
+        
         string host = matches[3];
 
         string urlValida = "";
-        //URL: http:// + www. + xxxxxx.com + /xxxx/xxxxx + #<fragmento> - removendo www. e #<fragmento>
+
+        //urlValida: http:// + xxxx.com + /xxxx/xxxx?q=xxxx -> <protocolo>://<host><path>?<query>
         urlValida.append(matches[1]).append(matches[3]).append(matches[4]);
+
+        // invalida URLs com as extensões .jpg, .gif, .mp3, .avi, .doc e .pdf
         if (urlValida.find(".jpg") != string::npos || urlValida.find(".gif") != string::npos || urlValida.find(".mp3") != string::npos ||\
             urlValida.find(".avi") != string::npos || urlValida.find(".doc") != string::npos || urlValida.find(".pdf") != string::npos){
             cerr << "URL inválida" << endl;
             return;
         }
         
-
+        // remove '/' no final
         if (urlValida.back() == '/'){
             urlValida.pop_back();
         }
         
+        bool hostPresente = false;
+        ListaEncadeada* listaDeURLS = new ListaEncadeada();
+        
+        // procura o host e insere a URL na posição correta da lista
         for (int i = 1; i <= coletor.getTamanho(); i++){
             if (coletor.getHost(i) == host){
                 hostPresente = true;
@@ -127,6 +154,8 @@ void Escalonador::addUrl(string url){
                 break;
             }
         }
+
+        // cria um host novo no final da fila se o host não está presente
         if (!hostPresente){
             listaDeURLS->insereInicio(urlValida);
             coletor.insereFinal(*(listaDeURLS), host);
