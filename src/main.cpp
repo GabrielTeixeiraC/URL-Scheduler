@@ -32,7 +32,6 @@ int main(int argc, char *argv[]){
     regex regexNomeDoArquivo("([-/A-Za-z0-9]*)(.[a-z]*)");
     regex_match(nomeArquivoComandos, matches, regexNomeDoArquivo);
 
-
     string nomeDoArquivoSemExtensao = matches[1];
     string extensaoDoArquivo = matches[2];
 
@@ -47,10 +46,6 @@ int main(int argc, char *argv[]){
 
     string comando;
     
-
-
-
-
     if (arquivoDeComandos.is_open() && arquivoDeSaida.is_open()){
         while (getline(arquivoDeComandos, comando)){
             // regex para identificar comandos passados pelo arquivo
