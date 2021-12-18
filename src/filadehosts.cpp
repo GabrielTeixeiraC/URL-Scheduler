@@ -11,6 +11,7 @@
 
 using namespace std;
 
+// construtor da Fila de Hosts
 FilaDeHosts::FilaDeHosts() {
     primeiro = new CelulaFilaDeHosts();
     ultimo = primeiro;
@@ -18,26 +19,37 @@ FilaDeHosts::FilaDeHosts() {
     tamanho = 0;
 }
 
+// checa se a Fila de Hosts está vazia
 bool FilaDeHosts::vazia() {
     return tamanho == 0;
 }
 
+// retorna o tamanho da Fila de Hosts
 int FilaDeHosts::getTamanho() {
     return tamanho;
 }
 
+// Descricao: retorna o endereço da Lista de URLs na posição especificada
+// Entrada: pos
+// Saida: endereço de ListaDeURLS
 ListaDeURLS* FilaDeHosts::getItem(int pos){
     CelulaFilaDeHosts *p;
     p = posiciona(pos, false);
     return &(p->item);
 }
 
+// Descricao: retorna o host da Celula de Fila de Hosts na posição especificada
+// Entrada: pos
+// Saida: string
 string FilaDeHosts::getHost(int pos){
     CelulaFilaDeHosts *p;
     p = posiciona(pos, false);
     return p->host;
 }
 
+// Descricao: etorna a Celula da Fila de Hosts na posição especificada ou uma posição antes
+// Entrada: pos, antes
+// Saida: Celula de Fila de Hosts
 CelulaFilaDeHosts* FilaDeHosts::posiciona(int pos, bool antes = false){
     CelulaFilaDeHosts *p; 
     int i;
@@ -57,6 +69,9 @@ CelulaFilaDeHosts* FilaDeHosts::posiciona(int pos, bool antes = false){
     return p;
 }
 
+// Descricao: insere uma Lista de URLs no final da Celula de Fila de Hosts com o host especificado
+// Entrada: item, host
+// Saida: -
 void FilaDeHosts::insereFinal(ListaDeURLS item, string host){
     CelulaFilaDeHosts *nova;
     nova = new CelulaFilaDeHosts();
@@ -68,6 +83,9 @@ void FilaDeHosts::insereFinal(ListaDeURLS item, string host){
     tamanho++;
 }
 
+// Descricao: remove uma Lista de URLs do início da Fila de Hosts
+// Entrada: -
+// Saida: ListaDeURLS removida
 ListaDeURLS FilaDeHosts::removeInicio(){
     ListaDeURLS aux;
     CelulaFilaDeHosts *p;
@@ -77,14 +95,20 @@ ListaDeURLS FilaDeHosts::removeInicio(){
     p = primeiro->prox;
     primeiro->prox = p->prox;
     tamanho--;
+
+    // ListaDeURLS era a única na Fila de Hosts
     if(primeiro->prox == NULL){
         ultimo = primeiro;
     }
+
     aux = p->item;
     delete p;
     return aux;
 }
 
+// Descricao: limpa a Fila De Hosts, permite evitar vazamentos de memória
+// Entrada: -
+// Saida: -
 void FilaDeHosts::limpa(){
     CelulaFilaDeHosts *p;
     p = primeiro->prox;

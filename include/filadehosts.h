@@ -12,12 +12,14 @@
 
 using namespace std;
 
+// Celula da lista de hosts com um host, uma lista de URLs e um apontador para a próxima Celula
 struct CelulaFilaDeHosts
 {
     string host;
     ListaDeURLS item;
     CelulaFilaDeHosts* prox;
 
+    // Construtor de uma Celula de Fila de Hosts
     CelulaFilaDeHosts(){
         this->item = ListaDeURLS();
         this->prox = NULL;

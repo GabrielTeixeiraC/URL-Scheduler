@@ -19,7 +19,7 @@ Escalonador::Escalonador(){
 // Descricao: insere a URL na posição correta da lista de URLs do host em 
 //            ordem crescente de profundidade (quantidade de barras na URL)
 // Entrada: listaDeURLS, urlValida
-// Saida: lista com url adicionada na posição correta
+// Saida: -
 void insereNaPosicaoCorreta(ListaDeURLS* listaDeURLS, string urlValida){
     string urlPresente;
 
@@ -111,7 +111,7 @@ void insereNaPosicaoCorreta(ListaDeURLS* listaDeURLS, string urlValida){
 
 // Descricao: adiciona ao escalonador a url passada como parametro
 // Entrada: url
-// Saida: escalonador com url adicionada na posição correta
+// Saida: -
 void Escalonador::addUrl(string url){
     smatch matches;
 
@@ -170,7 +170,7 @@ void Escalonador::addUrl(string url){
 // Descricao: escalona todas as URLs seguindo as regras estabelecidas.
 //            Quando escalonadas, as URLs são exibidas e removidas da lista
 // Entrada: arquivoDeSaida
-// Saida: URLs impressas no arquivo de saída
+// Saida: -
 void Escalonador::escalonaTudo(ofstream& arquivoDeSaida){
     // percorre o escalonador imprimindo todas as URLs em cada host
     for (int i = 1; i <= coletor.getTamanho(); i++)    {
@@ -184,7 +184,7 @@ void Escalonador::escalonaTudo(ofstream& arquivoDeSaida){
 
 // Descricao: escalona a quantidade especificada de URLs seguindo a fila de hosts
 // Entrada: quantidade e arquivoDeSaida
-// Saida: URLs impressas no arquivo de saída
+// Saida: -
 void Escalonador::escalona(int quantidade, ofstream& arquivoDeSaida){
     // nenhuma URL para escalonar
     if (quantidade <= 0){
@@ -219,7 +219,7 @@ void Escalonador::escalona(int quantidade, ofstream& arquivoDeSaida){
 
 // Descricao: escalona a quantidade especificada de URLs de um host específico seguindo a fila de hosts
 // Entrada: host, quantidade arquivoDeSaida
-// Saida: URLs impressas no arquivo de saída
+// Saida: -
 void Escalonador::escalonaHost(string host, int quantidade, ofstream& arquivoDeSaida){
     int quantidadeFinal;
     ListaDeURLS *aux;
@@ -255,7 +255,7 @@ void Escalonador::escalonaHost(string host, int quantidade, ofstream& arquivoDeS
 
 // Descricao: exibe todas as URLs do host, na ordem de prioridade
 // Entrada: host, arquivoDeSaida
-// Saida: impressão das informações de um host no arquivo de saída
+// Saida: -
 void Escalonador::verHost(string host, ofstream& arquivoDeSaida){
     bool hostPresente = false;
 
@@ -271,14 +271,14 @@ void Escalonador::verHost(string host, ofstream& arquivoDeSaida){
 
     // imprime uma mensagem de erro se host não tiver sido achado e termina a execução do método
     if(!hostPresente){
-        cerr << "Host não está presente na fila, abortar" << endl;
+        cerr << "Host não está presente na fila" << endl;
         return;
     }
 }
 
 // Descricao: exibe todos os hosts, seguindo a ordem em que foram conhecidos
 // Entrada: arquivoDeSaida
-// Saida: impressão dos nomes dos hosts no arquivo de saída
+// Saida: -
 void Escalonador::listaHosts(ofstream& arquivoDeSaida){
     // percorre o escalonador imprimindo os hosts
     for (int i = 1; i <= coletor.getTamanho(); i++){
@@ -288,7 +288,7 @@ void Escalonador::listaHosts(ofstream& arquivoDeSaida){
 
 // Descricao:  limpa a lista de URLs do host passado como parametro
 // Entrada: host
-// Saida: host limpo
+// Saida: -
 void Escalonador::limpaHost(string host){
     bool hostPresente = false;
 
@@ -302,14 +302,14 @@ void Escalonador::limpaHost(string host){
 
     // imprime uma mensagem de erro se host não tiver sido achado e termina a execução do método
     if(!hostPresente){
-        cerr << "Host não está presente na fila, abortar" << endl;
+        cerr << "Host não está presente na fila" << endl;
         return;
     }
 }
 
 // Descricao:  limpa todas as URLs, inclusive os hosts
 // Entrada: -
-// Saida: escalonador limpo
+// Saida: -
 void Escalonador::limpaTudo(){
     // percorre o escalonador limpando suas células
     for (int i = 0; i < coletor.getTamanho(); i++){
