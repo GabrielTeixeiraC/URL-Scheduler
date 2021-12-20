@@ -12,6 +12,7 @@
 #include "filadehosts.h"
 #include "escalonador.h"
 #include "msgassert.h"
+#include "memlog.h"
 
 using namespace std;
 
@@ -19,6 +20,12 @@ using namespace std;
 // Entrada: argc e argv
 // Saida: depende da operacao escolhida
 int main(int argc, char *argv[]){
+    // inicia registro de acesso à memória
+    char nomeArquivoRegistro[100] = "tmp/log.txt";
+    iniciaMemLog(nomeArquivoRegistro);
+    ativaMemLog();
+
+    defineFaseMemLog(0);
     Escalonador escalonador;
 
     erroAssert(argv[1], "Nome de arquivo de entrada deve ser especificado");
@@ -41,8 +48,8 @@ int main(int argc, char *argv[]){
     nomeArquivoSaida.append(nomeDoArquivoSemExtensao).append("-out").append(extensaoDoArquivo);
     
     // abrem arquivos de comandos e de saída
-    ifstream arquivoDeComandos(nomeArquivoComandos);
-    ofstream arquivoDeSaida(nomeArquivoSaida);
+    ifstream arquivoDeComandos(nomeArquivoComandos.c_str());
+    ofstream arquivoDeSaida(nomeArquivoSaida.c_str());
 
     string comando;
     
@@ -63,6 +70,7 @@ int main(int argc, char *argv[]){
             bool comandoExiste = false;
 
             if (comandoFiltrado == "ADD_URLS"){
+                defineFaseMemLog(1);
                 comandoExiste = true;
                 // converte para unsigned long (só valores positivos) a string numérica identificada pelo regex
                 parametroInteiro = stoul(matches[2]);
@@ -75,35 +83,42 @@ int main(int argc, char *argv[]){
                 }
             }
             else if (comandoFiltrado == "ESCALONA_TUDO"){
+                defineFaseMemLog(2);
                 comandoExiste = true;
                 escalonador.escalonaTudo(arquivoDeSaida);
             }
             else if (comandoFiltrado == "ESCALONA"){
+                defineFaseMemLog(3);
                 comandoExiste = true;
                 parametroInteiro = stoul(matches[2]);
                 escalonador.escalona(parametroInteiro, arquivoDeSaida);
             }
             else if (comandoFiltrado == "ESCALONA_HOST"){
+                defineFaseMemLog(4);
                 comandoExiste = true;
                 parametroString = matches[2];
                 parametroInteiro = stoul(matches[3]);                
                 escalonador.escalonaHost(parametroString, parametroInteiro, arquivoDeSaida);
             }
             else if (comandoFiltrado == "VER_HOST"){
+                defineFaseMemLog(5);
                 comandoExiste = true;
                 parametroString = matches[2];
                 escalonador.verHost(parametroString, arquivoDeSaida);
             }            
             else if (comandoFiltrado == "LISTA_HOSTS"){
+                defineFaseMemLog(6);
                 comandoExiste = true;
                 escalonador.listaHosts(arquivoDeSaida);
             }
             else if (comandoFiltrado == "LIMPA_HOST"){
+                defineFaseMemLog(7);
                 comandoExiste = true;
                 parametroString = matches[2];
                 escalonador.limpaHost(parametroString);
             }
             else if (comandoFiltrado == "LIMPA_TUDO"){
+                defineFaseMemLog(8);
                 comandoExiste = true;
                 escalonador.limpaTudo();
             }
@@ -116,5 +131,8 @@ int main(int argc, char *argv[]){
         arquivoDeComandos.close();
         arquivoDeSaida.close();
     }
+
+    // finaliza registro de acesso à memória
+    finalizaMemLog();
     return 0;
 }

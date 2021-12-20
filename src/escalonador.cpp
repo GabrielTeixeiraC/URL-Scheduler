@@ -8,12 +8,16 @@
 #include <iostream>
 #include <regex>
 #include "escalonador.h"
+#include "memlog.h"
 
 using namespace std;
 
 // construtor de um escalonador
 Escalonador::Escalonador(){
     coletor = FilaDeHosts();   
+
+    // registra acesso à memoria
+    escreveMemLog( (long int) (&coletor), sizeof(FilaDeHosts), 2);
 }
 
 // Descricao: insere a URL na posição correta da lista de URLs do host em 
@@ -40,6 +44,8 @@ void insereNaPosicaoCorreta(ListaDeURLS* listaDeURLS, string urlValida){
         profundidadeURLNova = count(urlValida.begin(), urlValida.end(), '/');
 
         urlPresente = listaDeURLS->getItem(1);
+        escreveMemLog( (long int) (&urlPresente), sizeof(string), 2);
+
         profundidadeURLAnterior = count(urlPresente.begin(), urlPresente.end(), '/');
         
         // impede inserção de URLs repetidas
@@ -62,6 +68,8 @@ void insereNaPosicaoCorreta(ListaDeURLS* listaDeURLS, string urlValida){
             profundidadeURLNova = count(urlValida.begin(), urlValida.end(), '/');
             
             urlPresente = listaDeURLS->getItem(j);
+            escreveMemLog( (long int) (&urlPresente), sizeof(string), 2);
+
             profundidadeURLAnterior = count(urlPresente.begin(), urlPresente.end(), '/');
 
             if (urlValida == urlPresente){
@@ -82,6 +90,8 @@ void insereNaPosicaoCorreta(ListaDeURLS* listaDeURLS, string urlValida){
 
             // pega a profundidade da URL anterior
             urlPresente = listaDeURLS->getItem(j);
+            escreveMemLog( (long int) (&urlPresente), sizeof(string), 2);
+
             profundidadeURLAnterior = count(urlPresente.begin(), urlPresente.end(), '/');
 
             // checa se a URL já está presente, só compara com a URL anterior pois a próxima URL
@@ -92,6 +102,8 @@ void insereNaPosicaoCorreta(ListaDeURLS* listaDeURLS, string urlValida){
 
             // pega a profundidade da próxima URL
             urlPresente = listaDeURLS->getItem(j + 1);
+            escreveMemLog( (long int) (&urlPresente), sizeof(string), 2);
+
             profundidadeURLProxima = count(urlPresente.begin(), urlPresente.end(), '/');
             
             // encaixa a URL nova na posição correta, seja no início, no meio ou no final da lista
@@ -143,12 +155,15 @@ void Escalonador::addUrl(string url){
         
         bool hostPresente = false;
         ListaDeURLS* listaDeURLS = new ListaDeURLS();
+        escreveMemLog( (long int) (&listaDeURLS), sizeof(ListaDeURLS*), 2);
+
         
         // procura o host e insere a URL na posição correta da lista
         for (int i = 1; i <= coletor.getTamanho(); i++){
             if (coletor.getHost(i) == host){
                 hostPresente = true;
                 listaDeURLS = coletor.getItem(i);
+                escreveMemLog( (long int) (&listaDeURLS), sizeof(ListaDeURLS*), 2);
 
                 insereNaPosicaoCorreta(listaDeURLS, urlValida);
                 break;
@@ -175,6 +190,7 @@ void Escalonador::escalonaTudo(ofstream& arquivoDeSaida){
     // percorre o escalonador imprimindo todas as URLs em cada host
     for (int i = 1; i <= coletor.getTamanho(); i++)    {
         ListaDeURLS *aux = coletor.getItem(i);
+        escreveMemLog( (long int) (&aux), sizeof(ListaDeURLS), 2);
         int tamanhoLista = aux->getTamanho();
         for (int j = 0; j < tamanhoLista; j++){
             arquivoDeSaida << aux->removeInicio() << endl;
@@ -199,6 +215,7 @@ void Escalonador::escalona(int quantidade, ofstream& arquivoDeSaida){
     for (int i = 1; i <= coletor.getTamanho(); i++){
         // a celula cabeça é pulada
         aux = coletor.getItem(i);
+        escreveMemLog( (long int) (&aux), sizeof(ListaDeURLS*), 2);
         quantidadeAtual = aux->getTamanho();
 
         // escalona todo o host e diminui a quantidade a ser escalonada nos proximos hosts
@@ -229,6 +246,7 @@ void Escalonador::escalonaHost(string host, int quantidade, ofstream& arquivoDeS
     for (int i = 1; i <= coletor.getTamanho(); i++){
         if (coletor.getHost(i) == host){
             aux = coletor.getItem(i);
+            escreveMemLog( (long int) (&aux), sizeof(ListaDeURLS*), 2);
             hostPresente = true;
             break;
         }
@@ -263,6 +281,7 @@ void Escalonador::verHost(string host, ofstream& arquivoDeSaida){
     for (int i = 1; i <= coletor.getTamanho(); i++){
         if (coletor.getHost(i) == host){
             ListaDeURLS *aux = coletor.getItem(i);
+            escreveMemLog( (long int) (&aux), sizeof(ListaDeURLS*), 2);
             aux->imprime(arquivoDeSaida);
             hostPresente = true;
             break;

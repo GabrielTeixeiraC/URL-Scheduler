@@ -15,10 +15,10 @@ SRC = src
 OBJ = obj
 INC = include
 
-OBJS = $(OBJ)/main.o $(OBJ)/escalonador.o $(OBJ)/filadehosts.o $(OBJ)/listadeurls.o
-HDRS = $(INC)/escalonador.h $(INC)/filadehosts.h $(INC)/listadeurls.h
+OBJS = $(OBJ)/main.o $(OBJ)/escalonador.o $(OBJ)/filadehosts.o $(OBJ)/listadeurls.o $(OBJ)/memlog.o
+HDRS = $(INC)/escalonador.h $(INC)/filadehosts.h $(INC)/listadeurls.h $(INC)/memlog.h
 
-CXXFLAGS = -c -g -std=c++11 -Wall -I$(INC)
+CXXFLAGS = -c -std=c++11 -Wall -I$(INC)
 
 EXE = $(BIN)/main
 
@@ -36,8 +36,11 @@ $(OBJ)/escalonador.o: $(HDRS) $(SRC)/escalonador.cpp
 $(OBJ)/filadehosts.o: $(HDRS) $(SRC)/filadehosts.cpp
 	$(CXX) $(CXXFLAGS) -o $(OBJ)/filadehosts.o $(SRC)/filadehosts.cpp
 
+$(OBJ)/memlog.o: $(HDRS) $(SRC)/memlog.c
+	$(CXX) $(CXXFLAGS) -o $(OBJ)/memlog.o $(SRC)/memlog.c
+
 $(OBJ)/listadeurls.o: $(HDRS) $(SRC)/listadeurls.cpp
 	$(CXX) $(CXXFLAGS) -o $(OBJ)/listadeurls.o $(SRC)/listadeurls.cpp
-			
+		
 clean:
 	rm $(EXE) $(OBJS)
