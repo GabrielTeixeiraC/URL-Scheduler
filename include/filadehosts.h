@@ -36,7 +36,6 @@ class FilaDeHosts {
         ListaDeURLS* getItem(int pos);
         ListaDeURLS removeInicio();
         void insereFinal(ListaDeURLS item, string host);
-        void imprime();
         void limpa();
     
     protected:

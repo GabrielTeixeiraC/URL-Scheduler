@@ -131,7 +131,10 @@ int main(int argc, char *argv[]){
         arquivoDeComandos.close();
         arquivoDeSaida.close();
     }
-
+    else{
+        erroAssert(arquivoDeComandos.is_open(), "Arquivo de Comandos não foi aberto");
+        erroAssert(arquivoDeSaida.is_open(), "Arquivo de Saída não foi aberto");    
+    }
     // finaliza registro de acesso à memória
     finalizaMemLog();
     return 0;

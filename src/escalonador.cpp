@@ -14,10 +14,10 @@ using namespace std;
 
 // construtor de um escalonador
 Escalonador::Escalonador(){
-    coletor = FilaDeHosts();   
+    escalonador = FilaDeHosts();   
 
     // registra acesso à memoria
-    escreveMemLog( (long int) (&coletor), sizeof(FilaDeHosts), 2);
+    escreveMemLog( (long int) (&escalonador), sizeof(FilaDeHosts), 2);
 }
 
 // Descricao: insere a URL na posição correta da lista de URLs do host em 
@@ -147,7 +147,7 @@ void Escalonador::addUrl(string url){
             cerr << "URL inválida" << endl;
             return;
         }
-        
+
         // remove '/' no final
         if (urlValida.back() == '/'){
             urlValida.pop_back();
@@ -159,10 +159,10 @@ void Escalonador::addUrl(string url){
 
         
         // procura o host e insere a URL na posição correta da lista
-        for (int i = 1; i <= coletor.getTamanho(); i++){
-            if (coletor.getHost(i) == host){
+        for (int i = 1; i <= escalonador.getTamanho(); i++){
+            if (escalonador.getHost(i) == host){
                 hostPresente = true;
-                listaDeURLS = coletor.getItem(i);
+                listaDeURLS = escalonador.getItem(i);
                 escreveMemLog( (long int) (&listaDeURLS), sizeof(ListaDeURLS*), 2);
 
                 insereNaPosicaoCorreta(listaDeURLS, urlValida);
@@ -173,7 +173,7 @@ void Escalonador::addUrl(string url){
         // cria um host novo no final da fila se o host não está presente
         if (!hostPresente){
             listaDeURLS->insereInicio(urlValida);
-            coletor.insereFinal(*(listaDeURLS), host);
+            escalonador.insereFinal(*(listaDeURLS), host);
         }
     }
 
@@ -188,8 +188,8 @@ void Escalonador::addUrl(string url){
 // Saida: -
 void Escalonador::escalonaTudo(ofstream& arquivoDeSaida){
     // percorre o escalonador imprimindo todas as URLs em cada host
-    for (int i = 1; i <= coletor.getTamanho(); i++)    {
-        ListaDeURLS *aux = coletor.getItem(i);
+    for (int i = 1; i <= escalonador.getTamanho(); i++)    {
+        ListaDeURLS *aux = escalonador.getItem(i);
         escreveMemLog( (long int) (&aux), sizeof(ListaDeURLS), 2);
         int tamanhoLista = aux->getTamanho();
         for (int j = 0; j < tamanhoLista; j++){
@@ -210,11 +210,11 @@ void Escalonador::escalona(int quantidade, ofstream& arquivoDeSaida){
     int quantidadeAtual;
     ListaDeURLS* aux;
     
-    // percorre a fila de hosts <---------------------------------------------------------------------- escalonando as URLs,
+    // percorre a fila de hosts escalonando as URLs,
     // se um host for completamente escalonado, passa para o próximo na fila e continua escalonando   
-    for (int i = 1; i <= coletor.getTamanho(); i++){
+    for (int i = 1; i <= escalonador.getTamanho(); i++){
         // a celula cabeça é pulada
-        aux = coletor.getItem(i);
+        aux = escalonador.getItem(i);
         escreveMemLog( (long int) (&aux), sizeof(ListaDeURLS*), 2);
         quantidadeAtual = aux->getTamanho();
 
@@ -229,7 +229,13 @@ void Escalonador::escalona(int quantidade, ofstream& arquivoDeSaida){
         else{
             for (int j = 0; j < quantidade; j++){
                 arquivoDeSaida << aux->removeInicio() << endl;
+                quantidade = 0;
             }
+        }
+        
+        // já escalonou a quantidade especificada
+        if (quantidade == 0){
+            return;
         }
     }        
 }
@@ -243,9 +249,9 @@ void Escalonador::escalonaHost(string host, int quantidade, ofstream& arquivoDeS
     bool hostPresente = false;
 
     // percorre o escalonador até achar o host passado como parametro
-    for (int i = 1; i <= coletor.getTamanho(); i++){
-        if (coletor.getHost(i) == host){
-            aux = coletor.getItem(i);
+    for (int i = 1; i <= escalonador.getTamanho(); i++){
+        if (escalonador.getHost(i) == host){
+            aux = escalonador.getItem(i);
             escreveMemLog( (long int) (&aux), sizeof(ListaDeURLS*), 2);
             hostPresente = true;
             break;
@@ -276,13 +282,13 @@ void Escalonador::escalonaHost(string host, int quantidade, ofstream& arquivoDeS
 // Saida: -
 void Escalonador::verHost(string host, ofstream& arquivoDeSaida){
     bool hostPresente = false;
+    ListaDeURLS *aux;
 
     // percorre o escalonador até achar o host passado como parametro e imprime suas informações 
-    for (int i = 1; i <= coletor.getTamanho(); i++){
-        if (coletor.getHost(i) == host){
-            ListaDeURLS *aux = coletor.getItem(i);
+    for (int i = 1; i <= escalonador.getTamanho(); i++){
+        if (escalonador.getHost(i) == host){
+            aux = escalonador.getItem(i);
             escreveMemLog( (long int) (&aux), sizeof(ListaDeURLS*), 2);
-            aux->imprime(arquivoDeSaida);
             hostPresente = true;
             break;
         }
@@ -293,6 +299,8 @@ void Escalonador::verHost(string host, ofstream& arquivoDeSaida){
         cerr << "Host não está presente na fila" << endl;
         return;
     }
+
+    aux->imprime(arquivoDeSaida);
 }
 
 // Descricao: exibe todos os hosts, seguindo a ordem em que foram conhecidos
@@ -300,8 +308,8 @@ void Escalonador::verHost(string host, ofstream& arquivoDeSaida){
 // Saida: -
 void Escalonador::listaHosts(ofstream& arquivoDeSaida){
     // percorre o escalonador imprimindo os hosts
-    for (int i = 1; i <= coletor.getTamanho(); i++){
-        arquivoDeSaida << coletor.getHost(i) << endl;
+    for (int i = 1; i <= escalonador.getTamanho(); i++){
+        arquivoDeSaida << escalonador.getHost(i) << endl;
     }
 }
 
@@ -310,12 +318,15 @@ void Escalonador::listaHosts(ofstream& arquivoDeSaida){
 // Saida: -
 void Escalonador::limpaHost(string host){
     bool hostPresente = false;
+    ListaDeURLS *aux;
 
     // percorre o escalonador até achar o host passado como parametro e limpa-o
-    for (int i = 1; i <= coletor.getTamanho(); i++){
-        if (coletor.getHost(i) == host){
-            coletor.getItem(i)->limpa();
+    for (int i = 1; i <= escalonador.getTamanho(); i++){
+        if (escalonador.getHost(i) == host){
+            aux = escalonador.getItem(i);
+            escreveMemLog( (long int) (&aux), sizeof(ListaDeURLS*), 2);
             hostPresente = true;
+            break;
         }
     }
 
@@ -324,14 +335,15 @@ void Escalonador::limpaHost(string host){
         cerr << "Host não está presente na fila" << endl;
         return;
     }
+    aux->limpa();
 }
 
 // Descricao:  limpa todas as URLs, inclusive os hosts
 // Entrada: -
 // Saida: -
 void Escalonador::limpaTudo(){
-    // percorre o escalonador limpando suas células
-    for (int i = 0; i < coletor.getTamanho(); i++){
-        coletor.limpa();
-    }
+    // limpa o escalonador
+    // for (int i = 0; i < escalonador.getTamanho(); i++){
+    // }
+    escalonador.limpa();
 }

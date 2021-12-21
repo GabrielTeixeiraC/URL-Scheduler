@@ -55,7 +55,7 @@ CelulaLista* ListaDeURLS::posiciona(int pos, bool antes = false){
     int i;
 
     if ( (pos > tamanho) || (pos <= 0) ){
-        throw "ERRO: Posicao Invalida!";
+        cerr << "ERRO: Posicao Invalida!" << endl;
     }
 
     // posiciona na célula anterior a desejada
@@ -172,7 +172,7 @@ string ListaDeURLS::removeInicio(){
     string aux;
     CelulaLista *p;
     if (tamanho == 0){
-        throw "ERRO: Lista vazia!";
+        cerr << "ERRO: Lista vazia!" << endl;
     }
     p = primeiro->prox;
     primeiro->prox = p->prox;
@@ -208,7 +208,7 @@ string ListaDeURLS::removeFinal(){
     string aux;
     CelulaLista *p;
     if (tamanho == 0){
-        throw "ERRO: Lista vazia!";
+        cerr << "ERRO: Lista vazia!" << endl;
     }
     // posiciona p na celulaLista anterior à última
     p = posiciona(tamanho, true);
@@ -237,7 +237,7 @@ string ListaDeURLS::removePosicao(int pos){
     string aux;
     CelulaLista *p, *q;
     if (tamanho == 0){
-        throw "ERRO: Lista vazia!";
+        cerr << "ERRO: Lista vazia!" << endl;
     }
     // posiciona p na celulaLista anterior à pos
     p = posiciona(pos, true);

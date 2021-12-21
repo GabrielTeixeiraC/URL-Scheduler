@@ -69,7 +69,7 @@ CelulaFilaDeHosts* FilaDeHosts::posiciona(int pos, bool antes = false){
     int i;
 
     if ( (pos > tamanho) || (pos <= 0) ){
-        throw "ERRO: Posicao Invalida!";
+        cerr << "ERRO: Posicao Invalida!" << endl;
     }
 
     // Posiciona na célula anterior a desejada
@@ -127,7 +127,7 @@ ListaDeURLS FilaDeHosts::removeInicio(){
     ListaDeURLS aux;
     CelulaFilaDeHosts *p;
     if (tamanho == 0){
-        throw "ERRO: Lista vazia!";
+        cerr << "ERRO: Lista vazia!" << endl;
     }
     p = primeiro->prox;
     primeiro->prox = p->prox;
@@ -167,7 +167,7 @@ void FilaDeHosts::limpa(){
     escreveMemLog( (long int) (&p), sizeof(CelulaFilaDeHosts*), 1);
     leMemLog( (long int) (&primeiro->prox), sizeof(CelulaFilaDeHosts*), 1);
 
-    while (p!=NULL) {
+    while (p != NULL) {
         primeiro->prox = p->prox;
         
         // registra acesso à memoria

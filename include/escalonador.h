@@ -15,7 +15,7 @@ using namespace std;
 
 class Escalonador {
     private:
-        FilaDeHosts coletor;
+        FilaDeHosts escalonador;
     public:
         Escalonador();
         void addUrl(string url);
