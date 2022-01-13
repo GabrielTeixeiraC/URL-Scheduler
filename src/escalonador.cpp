@@ -190,7 +190,7 @@ void Escalonador::escalonaTudo(ofstream& arquivoDeSaida){
     // percorre o escalonador imprimindo todas as URLs em cada host
     for (int i = 1; i <= escalonador.getTamanho(); i++)    {
         ListaDeURLS *aux = escalonador.getItem(i);
-        escreveMemLog( (long int) (&aux), sizeof(ListaDeURLS), 2);
+        escreveMemLog( (long int) (&aux), sizeof(ListaDeURLS*), 2);
         int tamanhoLista = aux->getTamanho();
         for (int j = 0; j < tamanhoLista; j++){
             arquivoDeSaida << aux->removeInicio() << endl;
