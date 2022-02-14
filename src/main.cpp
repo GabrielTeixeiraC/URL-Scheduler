@@ -30,7 +30,7 @@ int main(int argc, char *argv[]){
 
     erroAssert(argv[1], "Nome de arquivo de entrada deve ser especificado");
     
-    // argv[1] = caminho do arquivo de comanados passado como parametro pela linha de comando
+    // argv[1] = caminho do arquivo de comandos passado como parametro pela linha de comando
     string nomeArquivoComandos = argv[1];
 
     // regex para identificar nome do arquivo 
