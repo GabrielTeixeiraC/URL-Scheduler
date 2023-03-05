@@ -128,10 +128,10 @@ void Escalonador::addUrl(string url){
     smatch matches;
 
     // padrão de regex seguindo as regras da especificação para identificar URLs válidas
-    regex regexURL("(http:\\/\\/)(www.)?([A-Za-z0-9]*[.A-Za-z0-9]*)([-._=?\\/A-Za-z0-9]*)([\\/#A-Za-z0-9]*)([\\r]*)");
+    regex regexURL("([A-Za-z]*:\\/\\/)(www.)?([A-Za-z0-9]*[.A-Za-z0-9]*)([-._=?\\/A-Za-z0-9]*)([\\/#A-Za-z0-9]*)([\\r]*)");
     if(regex_match(url, matches, regexURL)){    //URL válida
         
-        // matches: [0] = URL inteira, [1] = http://, [2] = www., [3] = xxxx.com (host)
+        // matches: [0] = URL inteira, [1] = [protocolo]://, [2] = www., [3] = xxxx.com (host)
         //          [4] = /xxxx/xxxx?q=xxxx (path e query), [5] = #xxxxxx (fragmento), [6] = \r   
         
         string host = matches[3];
@@ -229,8 +229,8 @@ void Escalonador::escalona(int quantidade, ofstream& arquivoDeSaida){
         else{
             for (int j = 0; j < quantidade; j++){
                 arquivoDeSaida << aux->removeInicio() << endl;
-                quantidade = 0;
             }
+            quantidade = 0;
         }
         
         // já escalonou a quantidade especificada
