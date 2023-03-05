@@ -1,0 +1,11 @@
+ADD_URLS 7
+http://github.com/collections/made-in-india/
+http://github.com/
+http://github.com/explore
+http://www.youtube.com/
+http://www.overleaf.com/
+http://www.tudogostoso.com.br/receita/21217-brigadeiro-branco.html
+http://virtual.ufmg.br/20212/
+ESCALONA_TUDO
+LISTA_HOSTS
+LIMPA_TUDO

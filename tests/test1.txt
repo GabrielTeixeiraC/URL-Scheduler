@@ -1,14 +1,19 @@
 ADD_URLS 8
-http://virtual.ufmg.br/20212/my/
-http://www.globo.com/
-http://github.com/marketplace/
-http://virtual.ufmg.br/
 http://github.com/collections/made-in-india/
 http://github.com/
 http://github.com/explore
-http://virtual.ufmg.br/20212/course/view.php?id=11910
+http://www.overleaf.com/project/
+http://www.overleaf.com/
+http://www.tudogostoso.com.br/receita/21217-brigadeiro-branco.html
+http://www.globo.com/
+http://www.tudogostoso.com.br/receita/1443-pao-de-queijo.html
 LISTA_HOSTS
-ESCALONA_HOST github.com 3
+ESCALONA 2
+ESCALONA_HOST github.com 1
+VER_HOST tudogostoso.com.br
+LIMPA_HOST overleaf.com
 ESCALONA_TUDO
+ADD_URLS 1
+http://www.globo.com/
 LIMPA_TUDO
 LISTA_HOSTS
