@@ -36,7 +36,7 @@ int main(int argc, char *argv[]){
     // regex para identificar nome do arquivo 
     // matches: [0] = nome do arquivo inteiro, [1] = /xxxx/xxxx (caminho), [2] = .xxx (extensão)
     smatch matches;
-    regex regexNomeDoArquivo("([-/A-Za-z0-9]*)(.[a-z]*)");
+    regex regexNomeDoArquivo("(\\.?[-/A-Za-z0-9]*)(.[a-z]*)");
     regex_match(nomeArquivoComandos, matches, regexNomeDoArquivo);
 
     string nomeDoArquivoSemExtensao = matches[1];
