@@ -2,13 +2,20 @@
 This program implements a URL scheduler, a module of a search engine responsible for defining the order in which URLs on the Internet should be crawled. Given a series of URLs from different hosts in the format 
 
     <protocol>://<host><path>?<query>#<fragment>
+    
 the program defines the order in which these URLs should be collected, following a depth-first collection strategy. A structure formed by a queue of lists was used, which collects known hosts first and then URLs with less depth.
+
+All data structures were implemented without using the STL or similar libraries.
+
 ## Compilation:
-To compile the program, run:
+To compile the program, navigate to the directory containing the source code and run the following command:
 
     make all
+    
 ## Usage:
 The definition of the operations to be performed is up to the user, who must pass as a parameter to the program, through the command line, a text file containing the desired operations. The program recognizes the file name through regex and creates a file with the same name as the input file plus the suffix '-out', where the results of the desired operations will be stored.
+
+    ./bin/main <input file>
 
 The operations that the user can perform in the program are:
     
@@ -26,11 +33,14 @@ The operations that the user can perform in the program are:
 
     LIMPA_HOST <host>: clears the list of URLs from the host.
     
-    LIMPA_TUDO: clears all hosts
+    LIMPA_TUDO: clears all URLs
 
 
 ## Example:
-  ## Input:
+Run on the command line:
+
+    ./bin/main ./tests/test1.txt
+### Input:
     ADD_URLS 8
     http://github.com/collections/made-in-india/
     http://github.com/
@@ -51,7 +61,7 @@ The operations that the user can perform in the program are:
     LIMPA_TUDO
     LISTA_HOSTS
 
-  ## Output:
+### Output:
     github.com
     overleaf.com
     tudogostoso.com.br
